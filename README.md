@@ -58,4 +58,4 @@ npm run dev
 php artisan serve
 ```
 
-_JETTE UN COUP D:OEIL -> https://portfolioo-beta-wine.vercel.app/_
+_Jette un coup d'oeil ==> https://portfolioo-beta-wine.vercel.app/_
