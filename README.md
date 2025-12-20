@@ -30,7 +30,7 @@ J’y partage mes réflexions sur la **tech**, le **développement web**, le **g
 
 ### Outils
 
-- Git & GitHub
+- Git & Github
 - Vite
 - SEO & performance
 
