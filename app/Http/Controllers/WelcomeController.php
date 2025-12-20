@@ -12,13 +12,13 @@ class WelcomeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index() : Response
+    public function index(): Response
     {
         $post = Post::with('auth')->latest()->get();
 
         return Inertia::render('Welcome', [
             'posts' => $post,
-            'canRegister' =>  config('services.registration.enabled', true)
+            'canRegister' => config('services.registration.enabled', true),
         ]);
     }
 

@@ -5,17 +5,16 @@ use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use Laravel\Fortify\Features;
 
 Route::get('/', [WelcomeController::class, 'index']);
-
-Route::get('/dashboard', function() {
+Route::get('/login', [Auth\LoginController::class, 'create'])->name('login');
+Route::get('/dashboard', function () {
     return Inertia::render('Dashboard', [
-        'usersPosts' => Auth::user()->posts()->with('author')->latest()->get()
+        'usersPosts' => Auth::user()->posts()->with('author')->latest()->get(),
     ]);
 });
 
-Route::middleware(['auth', 'verified'])->group(function(){
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 
@@ -27,7 +26,6 @@ Route::middleware(['auth', 'verified'])->group(function(){
     Route::post('posts/{post./like}', [PostController::class, 'like'])->name('posts.likes');
 });
 
-
 Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -36,4 +34,4 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 });
 
-require __DIR__.'/settings.php';
+require __DIR__ . '/settings.php';

@@ -13,15 +13,16 @@ class PostController extends Controller
 {
     public function index()
     {
-    if(!Auth::check()){
-        abort(403);
+        if (! Auth::check()) {
+            abort(403);
+        }
+
+        return Inertia::render('Posts/Create');
     }
 
-    return Inertia::render('Posts/Create',);
-    }
-
-    public function store(Request $request){
-        if(!Auth::check()){
+    public function store(Request $request)
+    {
+        if (! Auth::check()) {
             abort(403);
         }
 
@@ -31,13 +32,14 @@ class PostController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:2048',
         ]);
 
-        $post = new Post();
+        $post = new Post;
+
         $post->title = $validated['title'];
         $post->description = $validated['description'];
         // $post->image = $validated['image'];
         $post->user_id = Auth::id();
 
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $path = $request->file('image')->store('posts', 'public');
             $post->image = $path;
         }
@@ -47,25 +49,24 @@ class PostController extends Controller
         return redirect()->route('dashboard')->with('success', 'Post created successfully!');
     }
 
-    public function show(Post $post) : Response
+    public function show(Post $post): Response
     {
 
         return Inertia::render('Posts/Show', [
-            'post' => $post
+            'post' => $post,
         ]);
     }
 
-
-    public function edit(Post $post) : Response
+    public function edit(Post $post): Response
     {
 
         return Inertia::render('Posts/Edit', [
-            'post' => $post
+            'post' => $post,
         ]);
     }
 
-    public function update(Request $request, Post $post){
-
+    public function update(Request $request, Post $post)
+    {
 
         $validated = $request->validate([
             'title' => 'required|string|max:255',
@@ -73,14 +74,12 @@ class PostController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:2048',
         ]);
 
-
         $post->title = $validated['title'];
         $post->description = $validated['description'];
 
-
-        if($request->hasFile('image')){
-            if($post->image){
-               Storage::disk('public')->delete($post->image);
+        if ($request->hasFile('image')) {
+            if ($post->image) {
+                Storage::disk('public')->delete($post->image);
             }
             $path = $request->file('image')->store('posts', 'public');
             $post->image = $path;
@@ -91,8 +90,9 @@ class PostController extends Controller
         return redirect()->route('dashboard')->with('success', 'Post modified successfully!');
     }
 
-    public function destroy(Post $post){
-        if($post->image){
+    public function destroy(Post $post)
+    {
+        if ($post->image) {
             Storage::disk('public')->delete($post->image);
         }
         $post->delete();
@@ -100,12 +100,12 @@ class PostController extends Controller
         return redirect()->back()->with('success', 'Post deleted successfully!');
     }
 
-    public function like(Post $post){
+    public function like(Post $post)
+    {
         $user = Auth::user();
-        if($post->likedBy()->where('user_ id', $user->id)->exists()){
+        if ($post->likedBy()->where('user_ id', $user->id)->exists()) {
             $post->likedBy()->detach($user->id);
             $message = 'Tu as retire ton like!';
-
         } else {
             $post->likedBy()->attach($user->id);
             $message = 'Tu as ajoute ton like!';

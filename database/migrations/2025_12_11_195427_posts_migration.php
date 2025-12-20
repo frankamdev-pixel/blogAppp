@@ -1,6 +1,6 @@
-<?php
+    <?php
 
-use Illuminate\Database\Migrations\Migration;
+    use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
@@ -13,15 +13,17 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')
+                ->constrained('users')
+                ->cascadeOnDelete();
             $table->string('title');
             $table->text('description');
             $table->string('image')->nullable();
             $table->integer('likes')->default(0);
-            $table->foreign('user_id')->references('id')->onDelete('cascade');
             $table->timestamps();
         });
 
-        Schema::create('post_likes', function(Blueprint $table){
+        Schema::create('post_likes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('post_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');

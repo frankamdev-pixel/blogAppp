@@ -16,7 +16,7 @@ class Post extends Model
         'title',
         'description',
         'image',
-        'use_id'
+        'user_id',
     ];
 
     protected $appends = ['is_liked', 'likes_count'];
