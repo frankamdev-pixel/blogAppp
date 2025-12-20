@@ -36,7 +36,7 @@ class PostController extends Controller
 
         $post->title = $validated['title'];
         $post->description = $validated['description'];
-        // $post->image = $validated['image'];
+
         $post->user_id = Auth::id();
 
         if ($request->hasFile('image')) {
@@ -48,7 +48,12 @@ class PostController extends Controller
 
         return redirect()->route('dashboard')->with('success', 'Post created successfully!');
     }
-
+    public function create()
+    {
+        return Inertia::render('Posts/Create', [
+            'create' => 'je suis juste le test'
+        ]);
+    }
     public function show(Post $post): Response
     {
 

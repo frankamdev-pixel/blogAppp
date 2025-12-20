@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', [WelcomeController::class, 'index']);
-Route::get('/login', [Auth\LoginController::class, 'create'])->name('login');
+
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard', [
+    return Inertia::render('dashboard', [
         'usersPosts' => Auth::user()->posts()->with('author')->latest()->get(),
     ]);
 });
@@ -23,7 +23,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::delete('posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 
-    Route::post('posts/{post./like}', [PostController::class, 'like'])->name('posts.likes');
+    Route::post('posts/{post}/like', [PostController::class, 'like'])->name('posts.likes');
 });
 
 Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');

@@ -1,18 +1,39 @@
 root = true
 
+# ===== GLOBAL SETTINGS =====
 [*]
 charset = utf-8
 end_of_line = lf
-indent_size = 4
 indent_style = space
+indent_size = 4
 insert_final_newline = true
 trim_trailing_whitespace = true
 
+# ===== MARKDOWN =====
 [*.md]
 trim_trailing_whitespace = false
+indent_size = 2
 
+# ===== YAML & CONFIG FILES =====
 [*.{yml,yaml}]
 indent_size = 2
 
-[compose.yaml]
+# ===== JAVASCRIPT / TYPESCRIPT / JSX / TSX =====
+[*.{js,jsx,ts,tsx}]
+indent_size = 2
+
+# ===== JSON =====
+[*.json]
+indent_size = 2
+
+# ===== PHP (Laravel) =====
+[*.php]
 indent_size = 4
+
+# ===== CSS / SCSS =====
+[*.{css,scss}]
+indent_size = 2
+
+# ===== DOCKER COMPOSE =====
+[compose.yaml]
+indent_size = 2

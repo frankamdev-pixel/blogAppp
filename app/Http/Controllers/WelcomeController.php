@@ -14,10 +14,10 @@ class WelcomeController extends Controller
      */
     public function index(): Response
     {
-        $post = Post::with('auth')->latest()->get();
+        $posts = Post::with('author')->latest()->get();
 
         return Inertia::render('Welcome', [
-            'posts' => $post,
+            'posts' => $posts,
             'canRegister' => config('services.registration.enabled', true),
         ]);
     }
